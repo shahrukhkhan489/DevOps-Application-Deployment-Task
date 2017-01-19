@@ -13,12 +13,4 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbook.yml"
   end  
 
-  # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-  # end
-
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
 end
