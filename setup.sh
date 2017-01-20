@@ -4,27 +4,6 @@ wget  https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.rpm
 rpm -ivh vagrant_1.9.1_x86_64.rpm
 sudo yum install -y epel-release ansible
 
-
-
-mkdir vagrant_getting_started
-cd vagrant_getting_started
-vagrant init hashicorp/precise64
-
-sed -i "s/  #   vb.memory = \"1024\"/   vb.memory = \"2048\"/g" Vagrantfile
-sed -i "s/  # config.vm.provider \"virtualbox\" do |vb|/  # config.vm.provider \"virtualbox\" do |vb|/g" Vagrantfile
-sed -i '/ vb.memory = \"2048\"/!b;n;cend' Vagrantfile
-
-cat >> Vagrantfile << EOF
-
-Vagrant.configure("2") do |config|
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yml"
-  end
-
-end
-EOF
-
 #vagrant up
 
 
