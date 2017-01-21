@@ -1,0 +1,70 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Updating apt-cache 
+      apt: update_cache=yes
+      sudo: yes
+
+    - name: Installing latest version of Security Updates
+      apt: name=unattended-upgrades state=latest
+      sudo: yes
+
+    - name: Installing System Packages and OSRM Dependencies
+      apt: pkg={{ item }} state=installed update-cache=yes
+      sudo: yes
+      with_items:
+        - vim
+        - nano
+        - ntp
+        - lsof
+        - curl
+        - wget
+        - git
+        - python-dev
+        - gcc
+        - python-setuptools   
+        - build-essential
+        - cmake
+        - pkg-config
+        - libbz2-dev
+        - libstxxl-dev
+        - libstxxl1v5
+        - libxml2-dev
+        - libzip-dev
+        - libboost-all-dev
+        - lua5.2
+        - liblua5.2-dev
+        - libtbb-dev
+
+    - name: Clone OSRM Git Repository in /opt/OSRM Folder
+      git: repo='https://github.com/Project-OSRM/osrm-backend.git' dest=/opt/OSRM update=no
+
+
+    - name: Creating Build Directory for Compilation
+      file: path=/opt/OSRM/build state=directory
+
+
+    - name: Compiling OSRM binaries in Build Directory
+      command: chdir=/opt/OSRM/build/ {{ item }}
+      with_items:
+       - cmake ..
+       - cmake --build .
+
+    - name: Installing OSRM binaries using CMAKE
+      sudo: yes
+      command: chdir=/opt/OSRM/build/ {{ item }}
+      with_items: 
+       - cmake --build . --target install
+
+
+    - name: Grab a .osm.pbf extract from Geofabrik or Mapzen's Metro Extracts
+      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest=/opt/OSRM/build/berlin-latest.osm.pbf
+
+
+    - name: Pre-process the extract and start the HTTP server
+      sudo: yes
+      command: chdir=/opt/OSRM/build/ {{ item }}
+        - osrm-extract berlin-latest.osm.pbf -p profiles/car.lua
+        - osrm-contract berlin-latest.osrm
+        - osrm-routed berlin-latest.osrm
