@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    
+    - name: Updating apt-cache 
+      apt: update_cache=yes
+      sudo: yes
+
+    - name: Installing latest version of Security Updates
+      apt: name=unattended-upgrades state=latest
+      sudo: yes
