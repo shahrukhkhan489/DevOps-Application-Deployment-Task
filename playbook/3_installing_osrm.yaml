@@ -22,6 +22,3 @@
       command: chdir=/opt/OSRM/build/ {{ item }}
       with_items: 
        - cmake --build . --target install
-
-    - name: Grab a .osm.pbf extract from Geofabrik or Mapzen's Metro Extracts
-      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest=/opt/OSRM/build/berlin-latest.osm.pbf

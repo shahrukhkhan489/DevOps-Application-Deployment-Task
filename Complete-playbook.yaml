@@ -1,7 +1,14 @@
 ---
 - hosts: all
   become: true
+  remote-user: {{ssh_user}}
+
+  vars_files:
+    - variables.yaml
+
+
   tasks:
+    
     - name: Updating apt-cache 
       apt: update_cache=yes
       sudo: yes
@@ -37,7 +44,7 @@
         - liblua5.2-dev
         - libtbb-dev
 
-    - name: Clone OSRM Git Repository in /opt/OSRM Folder
+    - name: Clone OSRM Git Repository in {{directory_path}} Folder
       git: repo='https://github.com/Project-OSRM/osrm-backend.git' dest=/opt/OSRM update=no
 
 
@@ -59,12 +66,17 @@
 
 
     - name: Grab a .osm.pbf extract from Geofabrik or Mapzen's Metro Extracts
-      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest=/opt/OSRM/build/berlin-latest.osm.pbf
+      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest=/opt/OSRM/berlin-latest.osm.pbf
 
 
-    - name: Pre-process the extract and start the HTTP server
+    - name: Pre-process the extract
       sudo: yes
-      command: chdir=/opt/OSRM/build/ {{ item }}
+      command: chdir=/opt/OSRM/ {{ item }}
+      with_items:
         - osrm-extract berlin-latest.osm.pbf -p profiles/car.lua
-        - osrm-contract berlin-latest.osrm
-        - osrm-routed berlin-latest.osrm
+        - osrm-contract berlin-latest.osrm        
+
+
+    - name: Start the HTTP server
+      sudo: yes
+      shell: chdir=/opt/OSRM/ nohup osrm-routed berlin-latest.osrm &
