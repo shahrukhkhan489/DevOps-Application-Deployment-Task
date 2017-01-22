@@ -1,0 +1,16 @@
+---
+- 
+    - name: Updating apt-cache 
+      apt: update_cache=yes
+      sudo: yes
+
+    - name: Installing Helpful System Packages
+      apt: pkg={{ item }} state=latest update-cache=yes
+      sudo: yes
+      with_items:
+        - vim
+        - nano
+        - ntp
+        - lsof
+        - curl
+        - wget
