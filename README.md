@@ -68,14 +68,43 @@ As seen in the above diagram, the following architecture will be required to put
 
 To bring the task to a good end following aspects should be taken
 
-#### Deployment/Provisioning
 
-#### Security
+#### * Deployment/Provisioning
 
-#### Scaling
+Building Cloudformation templates should be used to describe the AWS resources and bring up the Entire AWS Infrastructure along with configurations displayed in above diagram.
 
-#### Operational Procedures
+AWS OpsWorks should be used to Provision the EC2 Instances with Packages etc.
 
-#### Monitoring/Alerting
+AWS Code Deploy can be used for Continuous Deployment to the EC2 Servers.
 
-#### Anything else you deem important
+
+#### * Security
+
+As the Component is a public-facing web application, AWS VPC should be used to create the entire architecture in a Private Subnet.
+
+Elastic Load Balancer should be used to Balance the Web Traffic across the EC2 Cluster which will be available to over the public subnet.
+
+Route 53 has to be used for the hosted zone to create resource record sets to tell the Domain Name System how you want traffic to be routed for that domain.
+
+
+#### * Scaling
+
+Multi-AZ deployments have to be done to enhance availability and durability.
+
+Autoscaling Group has to be defined with a scale out and scale in policy with integration with CloudWatch Alarms.
+
+Elastic Load Balancer has to be integrated With Auto Scaling Group to Balance the Web traffic across all the EC2 instances.
+
+AWS Elastic Cache can be used as it improves the performance of web applications by allowing you to retrieve information from fast, managed, in-memory data stores.
+
+
+#### * Operational Procedures
+
+For Building the Latest Code of Application Server Stack, a Continuous Integration and Delivery platform can be developed using GitHub, AWS CodePipeline, Jenkins, and AWS Elastic Beanstalk to Build and Release the Packages for every commit. 
+
+For Developemnt and Testing Vagrant platform can be used.
+
+
+#### * Monitoring/Alerting
+
+AWS CloudWatch should be used to collect and track metrics, collect and monitor log files, set alarms, and automatically react to changes in your AWS resources. 
