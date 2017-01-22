@@ -43,8 +43,8 @@ An overview that covers the major points is better than a detailed handling of a
 
 ##1.1 – Server Provisioning
 
-[![N|Vagrant with Ansible Provisioning](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Vagrant Flow.PNG)]
+[![N|Vagrant with Ansible Provisioning](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Vagrant_Flow.png)]
 
 ## 1.2 – Operations
 
-[![N|AWS Cloud Architecture](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Diagram.PNG)]
+[![N|AWS Cloud Architecture](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Diagram.png)]
