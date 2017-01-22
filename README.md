@@ -47,7 +47,7 @@ An overview that covers the major points is better than a detailed handling of a
 
 ###Prerequisites
 
-Following Applications are required for the abpve task
+Following Applications are required for the above task
 
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 * [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
