@@ -1,11 +1,8 @@
 ---
 - hosts: all
   become: true
-  remote-user: {{ssh_user}}
-
   vars_files:
     - variables.yaml
-
 
   tasks:
     
@@ -45,33 +42,33 @@
         - libtbb-dev
 
     - name: Clone OSRM Git Repository in {{directory_path}} Folder
-      git: repo='https://github.com/Project-OSRM/osrm-backend.git' dest=/opt/OSRM update=no
+      git: repo='https://github.com/Project-OSRM/osrm-backend.git' dest={{directory_path}} update=no
 
 
     - name: Creating Build Directory for Compilation
-      file: path=/opt/OSRM/build state=directory
+      file: path={{directory_path}}/build state=directory
 
 
     - name: Compiling OSRM binaries in Build Directory
-      command: chdir=/opt/OSRM/build/ {{ item }}
+      command: chdir={{directory_path}}/build/ {{ item }}
       with_items:
        - cmake ..
        - cmake --build .
 
     - name: Installing OSRM binaries using CMAKE
       sudo: yes
-      command: chdir=/opt/OSRM/build/ {{ item }}
+      command: chdir={{directory_path}}/build/ {{ item }}
       with_items: 
        - cmake --build . --target install
 
 
     - name: Grab a .osm.pbf extract from Geofabrik or Mapzen's Metro Extracts
-      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest=/opt/OSRM/berlin-latest.osm.pbf
+      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest={{directory_path}}/berlin-latest.osm.pbf
 
 
     - name: Pre-process the extract
       sudo: yes
-      command: chdir=/opt/OSRM/ {{ item }}
+      command: chdir={{directory_path}}/ {{ item }}
       with_items:
         - osrm-extract berlin-latest.osm.pbf -p profiles/car.lua
         - osrm-contract berlin-latest.osrm        
@@ -79,4 +76,4 @@
 
     - name: Start the HTTP server
       sudo: yes
-      shell: chdir=/opt/OSRM/ nohup osrm-routed berlin-latest.osrm &
+      shell: chdir={{directory_path}}/ nohup osrm-routed berlin-latest.osrm &

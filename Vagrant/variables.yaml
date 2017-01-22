@@ -1,0 +1,7 @@
+---
+ssh_user: ubuntu
+directory_path: /opt/OSRM
+
+ansible_connection: ssh
+ansible_ssh_user: vagrant
+ansible_ssh_pass: vagrant
