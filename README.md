@@ -47,7 +47,7 @@ An overview that covers the major points is better than a detailed handling of a
 
 ###Prerequisites
 
-Following Applications are required for the above task
+Following Applications are required to be installed for the above task
 
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 * [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
@@ -62,4 +62,20 @@ $ vagrant up
 
 ## 1.2 – Operations
 
-![N|AWS Cloud Architecture](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Diagram.png)
+![N|AWS Cloud Architecture](Diagrams/Diagram.png)
+
+As seen in the above diagram, the following architecture will be required to put the OSRM trip-routing component live in a cloud environment for full planet offload
+
+To bring the task to a good end following aspects should be taken
+
+#### Deployment/Provisioning
+
+#### Security
+
+#### Scaling
+
+#### Operational Procedures
+
+#### Monitoring/Alerting
+
+#### Anything else you deem important
