@@ -1,8 +1,0 @@
----
-- hosts: all
-  become: true
-  tasks:   
-
-    - name: Start the HTTP server
-      sudo: yes
-      shell: chdir=/opt/OSRM/ nohup osrm-routed berlin-latest.osrm &

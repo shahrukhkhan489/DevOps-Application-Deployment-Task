@@ -1,0 +1,7 @@
+---
+- 
+    - name: Installing SSH Key for Passwordless Authentication
+      authorized_key:
+        user: "{{ansible_ssh_user}}"
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

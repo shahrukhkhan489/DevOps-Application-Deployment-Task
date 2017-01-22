@@ -1,8 +1,5 @@
 ---
-- hosts: all
-  become: true
-  tasks:
-    
+-
     - name: Clone OSRM Git Repository in /opt/OSRM Folder
       git: repo='https://github.com/Project-OSRM/osrm-backend.git' dest=/opt/OSRM update=no
 

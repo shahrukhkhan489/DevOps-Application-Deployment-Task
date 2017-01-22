@@ -4,76 +4,11 @@
   vars_files:
     - variables.yaml
 
-  tasks:
+  roles:
+    - 0_Setting_up_Passwordless_SSH
+    - 1_Installing_Security_Updates
+    - 2_Installing_System_Packages
+    - 3_Installing_OSRM_Libraries
+    - 4_Grabbing_and_PreProcessing_Extracts
+    - 5_Starting_APP_Server
     
-    - name: Updating apt-cache 
-      apt: update_cache=yes
-      sudo: yes
-
-    - name: Installing latest version of Security Updates
-      apt: name=unattended-upgrades state=latest
-      sudo: yes
-
-    - name: Installing System Packages and OSRM Dependencies
-      apt: pkg={{ item }} state=latest update-cache=yes
-      sudo: yes
-      with_items:
-        - vim
-        - nano
-        - ntp
-        - lsof
-        - curl
-        - wget
-        - git
-        - python-dev
-        - gcc
-        - python-setuptools   
-        - build-essential
-        - cmake
-        - pkg-config
-        - libbz2-dev
-        - libstxxl-dev
-        - libstxxl1v5
-        - libxml2-dev
-        - libzip-dev
-        - libboost-all-dev
-        - lua5.2
-        - liblua5.2-dev
-        - libtbb-dev
-
-    - name: Clone OSRM Git Repository in {{directory_path}} Folder
-      git: repo='https://github.com/Project-OSRM/osrm-backend.git' dest={{directory_path}} update=no
-
-
-    - name: Creating Build Directory for Compilation
-      file: path={{directory_path}}/build state=directory
-
-
-    - name: Compiling OSRM binaries in Build Directory
-      command: chdir={{directory_path}}/build/ {{ item }}
-      with_items:
-       - cmake ..
-       - cmake --build .
-
-    - name: Installing OSRM binaries using CMAKE
-      sudo: yes
-      command: chdir={{directory_path}}/build/ {{ item }}
-      with_items: 
-       - cmake --build . --target install
-
-
-    - name: Grab a .osm.pbf extract from Geofabrik or Mapzen's Metro Extracts
-      get_url: url=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf dest={{directory_path}}/berlin-latest.osm.pbf
-
-
-    - name: Pre-process the extract
-      sudo: yes
-      command: chdir={{directory_path}}/ {{ item }}
-      with_items:
-        - osrm-extract berlin-latest.osm.pbf -p profiles/car.lua
-        - osrm-contract berlin-latest.osrm        
-
-
-    - name: Start the HTTP server
-      sudo: yes
-      shell: chdir={{directory_path}}/ nohup osrm-routed berlin-latest.osrm &

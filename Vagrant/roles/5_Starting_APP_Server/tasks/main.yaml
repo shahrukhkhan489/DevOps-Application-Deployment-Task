@@ -1,0 +1,5 @@
+---
+- 
+    - name: Start the HTTP server
+      sudo: yes
+      shell: chdir={{directory_path}}/ nohup osrm-routed berlin-latest.osrm &
