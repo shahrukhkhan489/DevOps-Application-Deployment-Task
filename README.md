@@ -43,7 +43,22 @@ An overview that covers the major points is better than a detailed handling of a
 
 ##1.1 – Server Provisioning
 
-![N|Vagrant with Ansible Provisioning](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Vagrant_Flow.png)
+![N|Vagrant with Ansible Provisioning](Diagrams/Vagrant_Flow.png)
+
+###Prerequisites
+
+Following Applications are required for the abpve task
+
+* [Vagrant](https://www.vagrantup.com/downloads.html)
+* [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+* [Ansible](https://www.ansible.com/)
+
+
+```sh
+$ git clone https://github.com/shahrukhkhan489/Task-Sentiance.git
+$ cd Task-Sentiance
+$ vagrant up
+```
 
 ## 1.2 – Operations
 
