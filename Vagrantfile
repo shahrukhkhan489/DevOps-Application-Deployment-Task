@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.provision "ansible" do |ansible|
-		ansible.playbook = "Complete-playbook.yaml"
+		ansible.playbook = "playbook/playbook.yaml"
 	end
 
 end

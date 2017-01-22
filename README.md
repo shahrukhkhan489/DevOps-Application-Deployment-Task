@@ -36,3 +36,15 @@ Take into account the following aspects:
 • Anything else you deem important
 
 An overview that covers the major points is better than a detailed handling of a single aspect.
+
+
+
+# Solutions
+
+##1.1 – Server Provisioning
+
+[![N|Vagrant with Ansible Provisioning](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Vagrant Flow.PNG)]
+
+## 1.2 – Operations
+
+[![N|AWS Cloud Architecture](https://github.com/shahrukhkhan489/Task-Sentiance/blob/master/Diagrams/Diagram.PNG)]
